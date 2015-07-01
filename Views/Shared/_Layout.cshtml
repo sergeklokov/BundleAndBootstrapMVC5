@@ -1,0 +1,96 @@
+﻿@using BundleAndBootstrapMVC5.Models;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+            @if (ViewData["isMenuAvailable"] != null && (bool)ViewData["isMenuAvailable"])
+            {
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                        Forms menu
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        <li role="presentation"><a role="menuitem" href="#">Home</a></li>
+                        <li role="presentation"><a role="menuitem" href="#">Work</a></li>
+                        <li role="presentation"><a role="menuitem" href="#">Gym</a></li>
+                        <li role="presentation" class="divider"></li>
+                        <li role="presentation"><a role="menuitem" href="#">Friend</a></li>
+                        <li role="presentation" class="divider"></li>
+
+                        @{var menu = (Dictionary<int, string>)ViewData["menuList"];
+                        foreach (var m in menu)
+                        {
+                            <li role="presentation">
+                                @Html.ActionLink(@m.Value, "MenuItem", "Home", new { id = m.Key }, null)
+                            </li>
+                        }}
+
+                    </ul>
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                        Complex menu
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        <li role="presentation"><a role="menuitem" href="#">Blah</a></li>
+                        <li role="presentation"><a role="menuitem" href="#">Wahh</a></li>
+                        <li role="presentation" class="divider"></li>
+
+                        @{var complexMenu = (List<MenuItem>)ViewData["complexMenu"];
+                          foreach (var m in complexMenu)
+                        {
+                            <li role="presentation">
+                                @Html.ActionLink(@m.Text, "ComplexMenuItem", "Home", new { id = m.ID, bigID = m.BigID }, null)
+                            </li>
+                        }}
+
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

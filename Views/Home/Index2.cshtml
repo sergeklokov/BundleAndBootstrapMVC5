@@ -1,0 +1,44 @@
+﻿
+@model BootstrapDemo.Models.SergeModel
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+@using (Html.BeginForm())
+{
+    <div>
+        @CustomTextBox.TextBox("Serge", "Klokov")
+        @Html.TextBoxFor(m=>m.BigID)
+    </div>
+    <div>
+        @Html.LabelWithMark("This a created using extension method")
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="page-header">Panel Header</div>
+            <div>
+                @Html.TextBoxFor(m => m.Name)
+            </div>
+            <div>
+                @helper LabelWithMarkRazor(string content)
+                {
+                    <label><mark>@content</mark></label>
+                }
+            </div>
+            <div>
+                
+            </div>
+            <div>
+                @LabelWithMarkRazor("Test of 2-nd custom helper")
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <input type="submit" value="Save" />
+
+}
